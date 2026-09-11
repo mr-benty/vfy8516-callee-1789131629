@@ -1,0 +1,13 @@
+name: callee-save
+on:
+  workflow_call:
+jobs:
+  inner:
+    runs-on: ubuntu-latest
+    cache-mode: write
+    steps:
+      - run: mkdir -p poisonpath && echo "written-by-foreign-callee-VERIFIER" > poisonpath/marker.txt
+      - uses: actions/cache/save@v4
+        with:
+          path: poisonpath
+          key: VFY8516-${{ github.run_id }}
